@@ -91,13 +91,13 @@ class ExpenseTracker:
             print("Warning: Expense exceeds the budget limit!")
 
     def generate_report(self, user_id, period='weekly'):
-        if period == 'weekly':
-            start_date = datetime.datetime.now() - datetime.timedelta(days=7)
-        elif period == 'monthly':
-            start_date = datetime.datetime.now() - datetime.timedelta(days=30)
-        else:
-            print("Invalid period specified. Please choose 'weekly' or 'monthly'.")
-            return
+        # if period == 'weekly':
+        #     start_date = datetime.datetime.now() - datetime.timedelta(days=7)
+        # elif period == 'monthly':
+        #     start_date = datetime.datetime.now() - datetime.timedelta(days=30)
+        # else:
+        #     print("Invalid period specified. Please choose 'weekly' or 'monthly'.")
+        #     return
 
         self.cur.execute("SELECT category, SUM(amount) FROM expenses WHERE user_id=? GROUP BY category", (user_id,))
         expenses = self.cur.fetchall()
@@ -217,6 +217,7 @@ def main():
             name = input("Enter your name: ")
             user_id = tracker.get_user_id(name)
             if user_id:
+                # period = input("Enter the period for the report (weekly/monthly): ")
                 period = input("Enter the period for the report (weekly/monthly): ")
                 report = tracker.generate_report(user_id, period)
                 if report:
